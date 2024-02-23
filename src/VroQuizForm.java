@@ -46,6 +46,7 @@ public class VroQuizForm extends JFrame {
         // Load the background image
         backgroundImage = new ImageIcon(getClass().getResource("/vro2.jpg")); // Provide the path to your image file
 
+        // Create and set properties for text label
         titleLabel = new JLabel("Answer 5 easy questions in 10 seconds!");
         titleLabel.setSize(400, 100);
         Font font = titleLabel.getFont();
@@ -56,6 +57,7 @@ public class VroQuizForm extends JFrame {
         Insets insets = new Insets(0, 100, 0, 100);
 
         random = new Random();
+        // Create and set random questions and answers for quiz
         int question1A = random.nextInt() * 1000;
         int question1B = random.nextInt() * 1000;
         int question1Answer = (question1A * question1B);
@@ -76,6 +78,7 @@ public class VroQuizForm extends JFrame {
         int question5B = random.nextInt() * 1000;
         int question5Answer = (question5A * question5B);
 
+        // Create and set properties for question field and labels
         question1Label = new JLabel("Question 1: " + question1A + " * " + question1B + " = ?");
         question1Field = new JTextField();
 

@@ -11,15 +11,13 @@ public class InterfaceForm extends JFrame {
     private JTextArea warningArea;
     private JButton clickButton;
 
-
-
     public InterfaceForm() {// Setting the title of the JFrame
         super("RansomVro");
 
         // Load the background image
         backgroundImage = new ImageIcon(getClass().getResource("/vro.jpg")); // Provide the path to your image file
 
-
+        // Create and set properties for text label
         titleLabel = new JLabel("RansomVro v1.1.0");
         titleLabel.setSize(400, 100);
         Font font = titleLabel.getFont();
@@ -27,6 +25,7 @@ public class InterfaceForm extends JFrame {
         titleLabel.setBorder(new EmptyBorder(20, 20, 20, 20));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
+        // Create and set properties for text area
         textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setFocusable(false);
@@ -39,6 +38,7 @@ public class InterfaceForm extends JFrame {
         textArea.setOpaque(false);
         textArea.setBackground(new Color(0, 0, 0, 0));
 
+        // Create and set properties for warning area
         warningArea = new JTextArea();
         warningArea.setEditable(false);
         warningArea.setFocusable(false);
@@ -96,7 +96,6 @@ public class InterfaceForm extends JFrame {
     }
 
     public static void main(String[] args) {
-        // Creating an instance of CustomJFrameWithBackground
         new InterfaceForm();
     }
 }

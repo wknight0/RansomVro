@@ -27,6 +27,7 @@ public class LossForm extends JFrame {
         // Load the background image
         backgroundImage = new ImageIcon(getClass().getResource("/vro3.jpg")); // Provide the path to your image file
 
+        // Create and set properties for text label
         titleLabel = new JLabel("You do not fw vro (◕︵◕)");
         titleLabel.setSize(400, 100);
         Font font = titleLabel.getFont();

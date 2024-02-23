@@ -28,6 +28,7 @@ public class WinForm extends JFrame {
         // Load the background image
         backgroundImage = new ImageIcon(getClass().getResource("/vro4.jpg")); // Provide the path to your image file
 
+        // Create and set properties for text label
         titleLabel = new JLabel("You fw vro and got your files back ◎[▪‿▪]◎");
         titleLabel.setSize(400, 100);
         Font font = titleLabel.getFont();
